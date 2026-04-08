@@ -14,10 +14,7 @@ body {
     box-shadow: 0 10px 20px rgba(0,0,0,0.1);
 }
 
-h1, h2 {
-    text-align: center;
-    color: #2c3e50;
-}
+h1, h2 { text-align: center; color: #2c3e50; }
 
 .menu-grid {
     display: grid;
@@ -35,39 +32,16 @@ h1, h2 {
     transition: transform 0.3s, box-shadow 0.3s;
 }
 
-.menu-card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 10px 20px rgba(0,0,0,0.15);
-}
+.menu-card:hover { transform: translateY(-5px); box-shadow: 0 10px 20px rgba(0,0,0,0.15); }
 
-.menu-card img {
-    width: 100%;
-    height: 120px;
-    object-fit: cover;
-    border-radius: 10px;
-}
+.menu-card img { width: 100%; height: 120px; object-fit: cover; border-radius: 10px; }
 
-.menu-card h3 {
-    margin: 10px 0 5px 0;
-    font-size: 16px;
-    color: #34495e;
-}
+.menu-card h3 { margin: 10px 0 5px 0; font-size: 16px; color: #34495e; }
 
-.menu-card p {
-    margin: 0 0 10px 0;
-    font-weight: bold;
-    color: #e74c3c;
-}
+.menu-card p { margin: 0 0 10px 0; font-weight: bold; color: #e74c3c; }
 
-.menu-card input {
-    width: 50px;
-    padding: 5px;
-    border-radius: 5px;
-    border: 1px solid #ccc;
-    text-align: center;
-}
+.menu-card input { width: 50px; padding: 5px; border-radius: 5px; border: 1px solid #ccc; text-align: center; }
 
-/* Gradient buttons */
 button {
     display: block;
     margin: 15px auto;
@@ -81,82 +55,28 @@ button {
     transition: transform 0.2s, box-shadow 0.2s;
 }
 
-button:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 5px 15px rgba(0,0,0,0.2);
-}
+button:hover { transform: translateY(-2px); box-shadow: 0 5px 15px rgba(0,0,0,0.2); }
 
-/* Resibo box */
-.receipt {
-    margin-top: 30px;
-    background: #ecf0f1;
-    padding: 20px;
-    border-radius: 12px;
-    box-shadow: inset 0 0 10px rgba(0,0,0,0.05);
-}
+.receipt { margin-top: 30px; background: #ecf0f1; padding: 20px; border-radius: 12px; box-shadow: inset 0 0 10px rgba(0,0,0,0.05); }
 
-#receiptContent p, #sukli {
-    margin: 5px 0;
-    font-size: 15px;
-}
+#receiptContent p, #sukli { margin: 5px 0; font-size: 15px; }
 
-.payment {
-    margin-top: 15px;
-    text-align: center;
-}
+.payment { margin-top: 15px; text-align: center; }
 
-.payment input {
-    width: 120px;
-    padding: 7px;
-    border-radius: 8px;
-    border: 1px solid #bdc3c7;
-    text-align: center;
-}
+.payment input { width: 120px; padding: 7px; border-radius: 8px; border: 1px solid #bdc3c7; text-align: center; }
 
-/* Mobile Adjustments */
 @media (max-width: 768px) {
-    .menu-grid {
-        grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
-    }
-
-    .menu-card img {
-        height: 100px;
-    }
-
-    .menu-card h3 {
-        font-size: 14px;
-    }
-
-    .menu-card input {
-        width: 40px;
-    }
-
-    button {
-        padding: 8px 20px;
-        font-size: 14px;
-    }
+    .menu-grid { grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); }
+    .menu-card img { height: 100px; }
+    .menu-card h3 { font-size: 14px; }
+    .menu-card input { width: 40px; }
+    button { padding: 8px 20px; font-size: 14px; }
 }
 
 @media (max-width: 480px) {
-    .menu-grid {
-        grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
-        gap: 10px;
-    }
-
-    .menu-card img {
-        height: 80px;
-    }
-
-    .menu-card h3 {
-        font-size: 13px;
-    }
-
-    .menu-card input {
-        width: 35px;
-    }
-
-    button {
-        padding: 6px 15px;
-        font-size: 13px;
-    }
+    .menu-grid { grid-template-columns: repeat(auto-fit, minmax(100px, 1fr)); gap: 10px; }
+    .menu-card img { height: 80px; }
+    .menu-card h3 { font-size: 13px; }
+    .menu-card input { width: 35px; }
+    button { padding: 6px 15px; font-size: 13px; }
 }
