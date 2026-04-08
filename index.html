@@ -7,91 +7,109 @@
 <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <div class="container">
-        <h1>Menu ni Mitch</h1>
+<div class="container">
+    <h1>Pastil ni Mama</h1>
 
-        <!-- Menu Grid -->
-        <div class="menu-grid">
-            <!-- Row 1 -->
-            <div class="menu-card">
-                <img src="images/pater.jpg" alt="Pater">
-                <h3>Pater</h3>
-                <p>₱25</p>
-                <input type="number" min="0" value="0" class="quantity" data-price="25">
-            </div>
-            <div class="menu-card">
-                <img src="images/pater_3siomai.jpg" alt="Pater at 3 Siomai">
-                <h3>Pater at 3 Siomai</h3>
-                <p>₱40</p>
-                <input type="number" min="0" value="0" class="quantity" data-price="40">
-            </div>
-            <div class="menu-card">
-                <img src="images/pater_hotdog.jpg" alt="Pater at Hotdog">
-                <h3>Pater at Hotdog</h3>
-                <p>₱40</p>
-                <input type="number" min="0" value="0" class="quantity" data-price="40">
-            </div>
-            <div class="menu-card">
-                <img src="images/pater_chickenskin.jpg" alt="Pater with Chicken Skin">
-                <h3>Pater with Chicken Skin</h3>
-                <p>₱35</p>
-                <input type="number" min="0" value="0" class="quantity" data-price="35">
-            </div>
-            <div class="menu-card">
-                <img src="images/chickenskin_rice.jpg.png" alt="Chicken Skin with Rice">
-                <h3>Chicken Skin with Rice</h3>
-                <p>₱30</p>
-                <input type="number" min="0" value="0" class="quantity" data-price="30">
-            </div>
-
-            <!-- Row 2 -->
-            <div class="menu-card">
-                <img src="images/pater_egg.jpg" alt="Pater at Egg">
-                <h3>Pater at Egg</h3>
-                <p>₱40</p>
-                <input type="number" min="0" value="0" class="quantity" data-price="40">
-            </div>
-            <div class="menu-card">
-                <img src="images/siomai.jpg" alt="Siomai">
-                <h3>Siomai</h3>
-                <p>₱5</p>
-                <input type="number" min="0" value="0" class="quantity" data-price="5">
-            </div>
-            <div class="menu-card">
-                <img src="images/lutong_hotdog.jpg" alt="Lutong Hotdog">
-                <h3>Lutong Hotdog</h3>
-                <p>₱15</p>
-                <input type="number" min="0" value="0" class="quantity" data-price="15">
-            </div>
-            <div class="menu-card">
-                <img src="images/lutong_itlog.jpg" alt="Lutong Itlog">
-                <h3>Lutong Itlog</h3>
-                <p>₱15</p>
-                <input type="number" min="0" value="0" class="quantity" data-price="15">
-            </div>
-            <div class="menu-card">
-                <img src="images/kanin.jpg" alt="Kanin">
-                <h3>Kanin</h3>
-                <p>₱10</p>
-                <input type="number" min="0" value="0" class="quantity" data-price="10">
-            </div>
+    <!-- Menu Grid -->
+    <div class="menu-grid">
+        <!-- Row 1 -->
+        <div class="menu-card">
+            <img src="images/pater.jpg" alt="Pater">
+            <h3>Pater</h3>
+            <p>₱25</p>
+            <input type="number" min="0" value="0" class="quantity" data-price="25">
+        </div>
+        <div class="menu-card">
+            <img src="images/pater_3siomai.jpg" alt="Pater at 3 Siomai">
+            <h3>Pater at 3 Siomai</h3>
+            <p>₱40</p>
+            <input type="number" min="0" value="0" class="quantity" data-price="40">
+        </div>
+        <div class="menu-card">
+            <img src="images/pater_hotdog.jpg" alt="Pater at Hotdog">
+            <h3>Pater at Hotdog</h3>
+            <p>₱40</p>
+            <input type="number" min="0" value="0" class="quantity" data-price="40">
+        </div>
+        <div class="menu-card">
+            <img src="images/pater_chickenskin.jpg" alt="Pater with Chicken Skin">
+            <h3>Pater with Chicken Skin</h3>
+            <p>₱35</p>
+            <input type="number" min="0" value="0" class="quantity" data-price="35">
+        </div>
+        <div class="menu-card">
+            <img src="images/chickenskin_rice.jpg" alt="Chicken Skin with Rice">
+            <h3>Chicken Skin with Rice</h3>
+            <p>₱30</p>
+            <input type="number" min="0" value="0" class="quantity" data-price="30">
         </div>
 
-        <button id="orderBtn">Order</button>
-
-        <div class="receipt" id="receipt">
-            <h2>Resibo</h2>
-            <div id="receiptContent"></div>
-            <p id="totalAmount"></p>
-            <div class="payment">
-                <label>Bayad: ₱</label>
-                <input type="number" id="bayad" min="0" value="0">
-                <button id="payBtn">Change</button>
-                <p id="sukli"></p>
-            </div>
-            <button id="newOrderBtn">Make Another Order</button>
+        <!-- Row 2 -->
+        <div class="menu-card">
+            <img src="images/pater_egg.jpg" alt="Pater at Egg">
+            <h3>Pater at Egg</h3>
+            <p>₱40</p>
+            <input type="number" min="0" value="0" class="quantity" data-price="40">
+        </div>
+        <div class="menu-card">
+            <img src="images/siomai.jpg" alt="Siomai">
+            <h3>Siomai</h3>
+            <p>₱5</p>
+            <input type="number" min="0" value="0" class="quantity" data-price="5">
+        </div>
+        <div class="menu-card">
+            <img src="images/lutong_hotdog.jpg" alt="Lutong Hotdog">
+            <h3>Lutong Hotdog</h3>
+            <p>₱15</p>
+            <input type="number" min="0" value="0" class="quantity" data-price="15">
+        </div>
+        <div class="menu-card">
+            <img src="images/lutong_itlog.jpg" alt="Lutong Itlog">
+            <h3>Lutong Itlog</h3>
+            <p>₱15</p>
+            <input type="number" min="0" value="0" class="quantity" data-price="15">
+        </div>
+        <div class="menu-card">
+            <img src="images/kanin.jpg" alt="Kanin">
+            <h3>Kanin</h3>
+            <p>₱10</p>
+            <input type="number" min="0" value="0" class="quantity" data-price="10">
         </div>
     </div>
+
+    <!-- Order Button -->
+    <button id="orderBtn">Order</button>
+
+    <!-- Receipt -->
+    <div class="receipt" id="receipt">
+        <h2>Resibo</h2>
+        <div id="receiptContent"></div>
+        <p id="totalAmount"></p>
+        <div class="payment">
+            <label>Bayad: ₱</label>
+            <input type="number" id="bayad" min="0" value="0">
+            <button id="payBtn">Change</button>
+            <p id="sukli"></p>
+        </div>
+        <button id="newOrderBtn">Make Another Order</button>
+    </div>
+
+    <!-- Order Form for Email -->
+    <h2>Submit Your Order via Email</h2>
+    <form action="https://formspree.io/f/https://formspree.io/f/xdapjjlv" method="POST" id="orderFormEmail">
+        <label for="name">Pangalan:</label>
+        <input type="text" id="name" name="name" placeholder="Juan dela Cruz" required>
+
+        <label for="order">Order Details:</label>
+        <input type="text" id="order" name="order" placeholder="2 Pastil at 1 Pater" required>
+
+        <label for="address">Address:</label>
+        <input type="text" id="address" name="address" placeholder="Brgy. Example, QC" required>
+
+        <button type="submit">I-submit ang Order</button>
+    </form>
+
+</div>
 
 <script src="script.js"></script>
 </body>
