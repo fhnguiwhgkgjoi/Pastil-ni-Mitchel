@@ -10,6 +10,7 @@
 <div class="container">
 <h1>Pastil ni Mama</h1>
 
+<!-- MENU GRID -->
 <div class="menu-grid">
     <!-- Row 1 -->
     <div class="menu-card"><img src="images/pater.jpg" alt="Pater"><h3>Pater</h3><p>₱25</p><input type="number" min="0" value="0" class="quantity" data-price="25"></div>
@@ -26,19 +27,23 @@
     <div class="menu-card"><img src="images/kanin.jpg" alt="Kanin"><h3>Kanin</h3><p>₱10</p><input type="number" min="0" value="0" class="quantity" data-price="10"></div>
 </div>
 
+<!-- ORDER BUTTON -->
 <button id="orderBtn">Order</button>
 
+<!-- RECEIPT -->
 <div class="receipt" id="receipt">
 <h2>Resibo</h2>
 <div id="receiptContent"></div>
 <p id="totalAmount"></p>
 <div class="payment">
-<label>Bayad: ₱</label><input type="number" id="bayad" min="0" value="0"><button id="payBtn">Change</button>
+<label>Bayad: ₱</label><input type="number" id="bayad" min="0" value="0">
+<button id="payBtn">Change</button>
 <p id="sukli"></p>
 </div>
 <button id="newOrderBtn">Make Another Order</button>
 </div>
 
+<!-- EMAIL FORM -->
 <h2>Submit Your Order via Email</h2>
 <form action="https://formspree.io/f/xdapjjlv" method="POST" id="orderFormEmail">
 <label>Pangalan:</label><input type="text" name="name" required>
@@ -46,8 +51,8 @@
 <label>Address:</label><input type="text" name="address" required>
 <button type="submit">I-submit ang Order</button>
 </form>
-</div>
 
+</div>
 <script src="script.js"></script>
 </body>
 </html>
