@@ -4,28 +4,26 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Pastil ni Mama</title>
-<style>
-body { font-family: Arial,sans-serif; background:#f0f4f8; margin:0; padding:0; }
-.container { max-width:1000px; margin:20px auto; background:white; padding:25px; border-radius:15px; box-shadow:0 10px 20px rgba(0,0,0,0.1); }
-h1,h2{text-align:center;}
-.menu-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr)); gap:20px; margin-top:25px;}
-.menu-card{background:#fff;border-radius:15px;padding:10px;text-align:center;box-shadow:0 5px 15px rgba(0,0,0,0.05);}
-.menu-card img{width:100%;height:120px;object-fit:cover;border-radius:10px;}
-.menu-card input{width:50px;padding:5px;border-radius:5px;border:1px solid #ccc;text-align:center;}
-button{display:block;margin:15px auto;padding:10px 25px;border:none;border-radius:12px;background:linear-gradient(45deg,#ff6b6b,#ff4757);color:white;font-size:16px;cursor:pointer;}
-.receipt{margin-top:30px;background:#ecf0f1;padding:20px;border-radius:12px;}
-.payment input{width:120px;padding:7px;border-radius:8px;border:1px solid #bdc3c7;text-align:center;}
-@media(max-width:480px){.menu-grid{grid-template-columns:repeat(auto-fit,minmax(100px,1fr));gap:10px;}.menu-card img{height:80px;}.menu-card input{width:35px;}}
-</style>
+<link rel="stylesheet" href="style.css">
 </head>
 <body>
 <div class="container">
 <h1>Pastil ni Mama</h1>
 
 <div class="menu-grid">
-<div class="menu-card"><img src="images/pater.jpg" alt="Pater"><h3>Pater</h3><p>₱25</p><input type="number" min="0" value="0" class="quantity" data-price="25"></div>
-<div class="menu-card"><img src="images/pater_3siomai.jpg" alt="Pater at 3 Siomai"><h3>Pater at 3 Siomai</h3><p>₱40</p><input type="number" min="0" value="0" class="quantity" data-price="40"></div>
-<div class="menu-card"><img src="images/pater_hotdog.jpg" alt="Pater at Hotdog"><h3>Pater at Hotdog</h3><p>₱40</p><input type="number" min="0" value="0" class="quantity" data-price="40"></div>
+    <!-- Row 1 -->
+    <div class="menu-card"><img src="images/pater.jpg" alt="Pater"><h3>Pater</h3><p>₱25</p><input type="number" min="0" value="0" class="quantity" data-price="25"></div>
+    <div class="menu-card"><img src="images/pater_3siomai.jpg" alt="Pater at 3 Siomai"><h3>Pater at 3 Siomai</h3><p>₱40</p><input type="number" min="0" value="0" class="quantity" data-price="40"></div>
+    <div class="menu-card"><img src="images/pater_hotdog.jpg" alt="Pater at Hotdog"><h3>Pater at Hotdog</h3><p>₱40</p><input type="number" min="0" value="0" class="quantity" data-price="40"></div>
+    <div class="menu-card"><img src="images/pater_chickenskin.jpg" alt="Pater with Chicken Skin"><h3>Pater with Chicken Skin</h3><p>₱35</p><input type="number" min="0" value="0" class="quantity" data-price="35"></div>
+    <div class="menu-card"><img src="images/chickenskin_rice.jpg.png" alt="Chicken Skin with Rice"><h3>Chicken Skin with Rice</h3><p>₱30</p><input type="number" min="0" value="0" class="quantity" data-price="30"></div>
+
+    <!-- Row 2 -->
+    <div class="menu-card"><img src="images/pater_egg.jpg" alt="Pater at Egg"><h3>Pater at Egg</h3><p>₱40</p><input type="number" min="0" value="0" class="quantity" data-price="40"></div>
+    <div class="menu-card"><img src="images/siomai.jpg" alt="Siomai"><h3>Siomai</h3><p>₱5</p><input type="number" min="0" value="0" class="quantity" data-price="5"></div>
+    <div class="menu-card"><img src="images/lutong_hotdog.jpg" alt="Lutong Hotdog"><h3>Lutong Hotdog</h3><p>₱15</p><input type="number" min="0" value="0" class="quantity" data-price="15"></div>
+    <div class="menu-card"><img src="images/lutong_itlog.jpg" alt="Lutong Itlog"><h3>Lutong Itlog</h3><p>₱15</p><input type="number" min="0" value="0" class="quantity" data-price="15"></div>
+    <div class="menu-card"><img src="images/kanin.jpg" alt="Kanin"><h3>Kanin</h3><p>₱10</p><input type="number" min="0" value="0" class="quantity" data-price="10"></div>
 </div>
 
 <button id="orderBtn">Order</button>
@@ -43,58 +41,13 @@ button{display:block;margin:15px auto;padding:10px 25px;border:none;border-radiu
 
 <h2>Submit Your Order via Email</h2>
 <form action="https://formspree.io/f/xdapjjlv" method="POST" id="orderFormEmail">
-<label>Pangalan:</label><input type="text" id="name" name="name" required>
-<label>Order Details:</label><input type="text" id="order" name="order" required>
-<label>Address:</label><input type="text" id="address" name="address" required>
+<label>Pangalan:</label><input type="text" name="name" required>
+<label>Order Details:</label><input type="text" name="order" id="order" required readonly>
+<label>Address:</label><input type="text" name="address" required>
 <button type="submit">I-submit ang Order</button>
 </form>
 </div>
 
-<script>
-const orderBtn=document.getElementById('orderBtn');
-const newOrderBtn=document.getElementById('newOrderBtn');
-const payBtn=document.getElementById('payBtn');
-
-orderBtn.addEventListener('click',function(){
-    const quantities=document.querySelectorAll('.quantity');
-    let receiptHTML='',total=0;
-    receiptHTML+='<hr>';
-    let orderText='';
-    quantities.forEach(q=>{
-        const qty=parseInt(q.value), price=parseFloat(q.dataset.price);
-        const name=q.parentElement.querySelector("h3").innerText;
-        if(qty>0){
-            const subtotal=qty*price;
-            total+=subtotal;
-            receiptHTML+=`<p>${name}<br>₱${price} x ${qty} = ₱${subtotal.toFixed(2)}</p><hr>`;
-            orderText+=`${qty} x ${name}, `;
-        }
-    });
-    if(total===0) receiptHTML="<p>Walang inorder.</p>";
-    document.getElementById('receiptContent').innerHTML=receiptHTML;
-    document.getElementById('totalAmount').innerHTML=`<strong>Total: ₱${total.toFixed(2)}</strong>`;
-    document.querySelector('.menu-grid').style.display='none';
-    orderBtn.style.display='none';
-    document.getElementById('order').value=orderText.slice(0,-2);
-});
-
-payBtn.addEventListener('click',function(){
-    const total=parseFloat(document.getElementById('totalAmount').innerText.replace('Total: ₱',''))||0;
-    const bayad=parseFloat(document.getElementById('bayad').value);
-    if(isNaN(bayad)||bayad<total) document.getElementById('sukli').innerText="Kulangan ang bayad!";
-    else document.getElementById('sukli').innerText=`Sukli: ₱${(bayad-total).toFixed(2)}`;
-});
-
-newOrderBtn.addEventListener('click',function(){
-    document.querySelectorAll('.quantity').forEach(q=>q.value=0);
-    document.getElementById('receiptContent').innerHTML='';
-    document.getElementById('totalAmount').innerText='';
-    document.getElementById('bayad').value=0;
-    document.getElementById('sukli').innerText='';
-    document.querySelector('.menu-grid').style.display='grid';
-    orderBtn.style.display='block';
-    document.getElementById('order').value='';
-});
-</script>
+<script src="script.js"></script>
 </body>
 </html>
