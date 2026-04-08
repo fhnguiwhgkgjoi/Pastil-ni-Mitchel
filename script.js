@@ -1,4 +1,4 @@
-// Order button
+// Order / receipt system
 document.getElementById('orderBtn').addEventListener('click', function() {
     const quantities = document.querySelectorAll('.quantity');
     let receiptHTML = '';
@@ -15,13 +15,7 @@ document.getElementById('orderBtn').addEventListener('click', function() {
             const subtotal = qty * price;
             total += subtotal;
 
-            receiptHTML += `
-            <p>
-            ${name}<br>
-            ₱${price} x ${qty} = ₱${subtotal.toFixed(2)}
-            </p>
-            <hr>
-            `;
+            receiptHTML += `<p>${name}<br>₱${price} x ${qty} = ₱${subtotal.toFixed(2)}</p><hr>`;
         }
     });
 
@@ -32,7 +26,6 @@ document.getElementById('orderBtn').addEventListener('click', function() {
     document.getElementById('receiptContent').innerHTML = receiptHTML;
     document.getElementById('totalAmount').innerHTML = `<strong>Total: ₱${total.toFixed(2)}</strong>`;
 
-    // Hide menu and order button
     document.querySelector('.menu-grid').style.display = 'none';
     document.getElementById('orderBtn').style.display = 'none';
 });
@@ -53,9 +46,7 @@ document.getElementById('payBtn').addEventListener('click', function() {
 
 // New Order button
 document.getElementById('newOrderBtn').addEventListener('click', function() {
-    const quantities = document.querySelectorAll('.quantity');
-    quantities.forEach(q => q.value = 0);
-
+    document.querySelectorAll('.quantity').forEach(q => q.value = 0);
     document.getElementById('receiptContent').innerHTML = '';
     document.getElementById('totalAmount').innerText = '';
     document.getElementById('bayad').value = 0;
@@ -63,4 +54,25 @@ document.getElementById('newOrderBtn').addEventListener('click', function() {
 
     document.querySelector('.menu-grid').style.display = 'grid';
     document.getElementById('orderBtn').style.display = 'block';
+});
+
+// Formspree email submission
+const formEmail = document.getElementById("orderFormEmail");
+formEmail.addEventListener("submit", function(e){
+    e.preventDefault();
+    fetch(formEmail.action, {
+        method: formEmail.method,
+        body: new FormData(formEmail),
+        headers: {'Accept': 'application/json'}
+    }).then(response => {
+        if(response.ok){
+            alert("Salamat! Natanggap na ang iyong order via email.");
+            formEmail.reset();
+        } else {
+            alert("May error, subukan ulit.");
+        }
+    }).catch(error => {
+        alert("May error, subukan ulit.");
+        console.error(error);
+    });
 });
