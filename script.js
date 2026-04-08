@@ -1,78 +1,128 @@
-// Order / receipt system
-document.getElementById('orderBtn').addEventListener('click', function() {
-    const quantities = document.querySelectorAll('.quantity');
-    let receiptHTML = '';
-    let total = 0;
+body {
+    font-family: 'Arial', sans-serif;
+    background: #f0f4f8;
+    margin: 0;
+    padding: 0;
+}
 
-    receiptHTML += "<hr>";
+.container {
+    max-width: 1000px;
+    margin: 20px auto;
+    background: white;
+    padding: 25px;
+    border-radius: 15px;
+    box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+}
 
-    quantities.forEach(q => {
-        const qty = parseInt(q.value);
-        const price = parseFloat(q.dataset.price);
-        const name = q.parentElement.querySelector("h3").innerText;
+h1, h2 {
+    text-align: center;
+    color: #2c3e50;
+}
 
-        if (qty > 0) {
-            const subtotal = qty * price;
-            total += subtotal;
+.menu-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 20px;
+    margin-top: 25px;
+}
 
-            receiptHTML += `<p>${name}<br>₱${price} x ${qty} = ₱${subtotal.toFixed(2)}</p><hr>`;
-        }
-    });
+.menu-card {
+    background: #ffffff;
+    border-radius: 15px;
+    padding: 10px;
+    text-align: center;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+    transition: transform 0.3s, box-shadow 0.3s;
+}
 
-    if (total === 0) {
-        receiptHTML = "<p>Walang inorder.</p>";
-    }
+.menu-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(0,0,0,0.15);
+}
 
-    document.getElementById('receiptContent').innerHTML = receiptHTML;
-    document.getElementById('totalAmount').innerHTML = `<strong>Total: ₱${total.toFixed(2)}</strong>`;
+.menu-card img {
+    width: 100%;
+    height: 120px;
+    object-fit: cover;
+    border-radius: 10px;
+}
 
-    document.querySelector('.menu-grid').style.display = 'none';
-    document.getElementById('orderBtn').style.display = 'none';
-});
+.menu-card h3 {
+    margin: 10px 0 5px 0;
+    font-size: 16px;
+    color: #34495e;
+}
 
-// Pay button
-document.getElementById('payBtn').addEventListener('click', function() {
-    const totalText = document.getElementById('totalAmount').innerText;
-    const total = parseFloat(totalText.replace('Total: ₱',''));
-    const bayad = parseFloat(document.getElementById('bayad').value);
+.menu-card p {
+    margin: 0 0 10px 0;
+    font-weight: bold;
+    color: #e74c3c;
+}
 
-    if (isNaN(bayad) || bayad < total) {
-        document.getElementById('sukli').innerText = "Kulangan ang bayad!";
-    } else {
-        const sukli = bayad - total;
-        document.getElementById('sukli').innerText = `Sukli: ₱${sukli.toFixed(2)}`;
-    }
-});
+.menu-card input {
+    width: 50px;
+    padding: 5px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    text-align: center;
+}
 
-// New Order button
-document.getElementById('newOrderBtn').addEventListener('click', function() {
-    document.querySelectorAll('.quantity').forEach(q => q.value = 0);
-    document.getElementById('receiptContent').innerHTML = '';
-    document.getElementById('totalAmount').innerText = '';
-    document.getElementById('bayad').value = 0;
-    document.getElementById('sukli').innerText = '';
+button {
+    display: block;
+    margin: 15px auto;
+    padding: 10px 25px;
+    border: none;
+    border-radius: 12px;
+    background: linear-gradient(45deg, #ff6b6b, #ff4757);
+    color: white;
+    font-size: 16px;
+    cursor: pointer;
+    transition: transform 0.2s, box-shadow 0.2s;
+}
 
-    document.querySelector('.menu-grid').style.display = 'grid';
-    document.getElementById('orderBtn').style.display = 'block';
-});
+button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+}
 
-// Formspree email submission
-const formEmail = document.getElementById("orderFormEmail");
-formEmail.addEventListener("submit", function(e){
-    e.preventDefault();
-    fetch(formEmail.action, {
-        method: formEmail.method,
-        body: new FormData(formEmail),
-        headers: {'Accept': 'application/json'}
-    }).then(response => {
-        if(response.ok){
-            alert("Salamat! Natanggap na ang iyong order via email.");
-            formEmail.reset();
-        } else {
-            alert("May error, subukan ulit.");
-        }
-    }).catch(error => {
-        alert("May error, subukan ulit.");
-        console.error(error);
-    });
-});
+.receipt {
+    margin-top: 30px;
+    background: #ecf0f1;
+    padding: 20px;
+    border-radius: 12px;
+    box-shadow: inset 0 0 10px rgba(0,0,0,0.05);
+}
+
+#receiptContent p, #sukli {
+    margin: 5px 0;
+    font-size: 15px;
+}
+
+.payment {
+    margin-top: 15px;
+    text-align: center;
+}
+
+.payment input {
+    width: 120px;
+    padding: 7px;
+    border-radius: 8px;
+    border: 1px solid #bdc3c7;
+    text-align: center;
+}
+
+@media (max-width: 768px) {
+    .menu-grid { grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); }
+    .menu-card img { height: 100px; }
+    .menu-card h3 { font-size: 14px; }
+    .menu-card input { width: 40px; }
+    button { padding: 8px 20px; font-size: 14px; }
+}
+
+@media (max-width: 480px) {
+    .menu-grid { grid-template-columns: repeat(auto-fit, minmax(100px, 1fr)); gap: 10px; }
+    .menu-card img { height: 80px; }
+    .menu-card h3 { font-size: 13px; }
+    .menu-card input { width: 35px; }
+    button { padding: 6px 15px; font-size: 13px; }
+}
