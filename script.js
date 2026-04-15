@@ -1,53 +1,167 @@
-const orderBtn = document.getElementById('orderBtn');
-const newOrderBtn = document.getElementById('newOrderBtn');
-const payBtn = document.getElementById('payBtn');
+const MENU = [
+  { name: 'Pater', price: 25, emoji: '🍱' },
+  { name: 'Pater at 3 Siomai', price: 40, emoji: '🍱' },
+  { name: 'Pater at Hotdog', price: 40, emoji: '🌭' },
+  { name: 'Pater with Chicken Skin', price: 35, emoji: '🍗' },
+  { name: 'Chicken Skin with Rice', price: 30, emoji: '🍗' },
+  { name: 'Pater at Egg', price: 40, emoji: '🥚' },
+  { name: 'Siomai', price: 5, emoji: '🥟' },
+  { name: 'Lutong Hotdog', price: 15, emoji: '🌭' },
+  { name: 'Lutong Itlog', price: 15, emoji: '🥚' },
+  { name: 'Kanin', price: 10, emoji: '🍚' },
+];
 
-orderBtn.addEventListener('click', function(){
-    const quantities = document.querySelectorAll('.quantity');
-    let receiptHTML = '';
-    let total = 0;
-    let orderText = '';
+let quantities = new Array(MENU.length).fill(0);
 
-    receiptHTML += '<hr>';
+function buildMenu() {
+  const grid = document.getElementById('menuGrid');
+  grid.innerHTML = MENU.map((item, i) => `
+    <div class="menu-card">
+      <div class="card-img"><span style="font-size:42px;">${item.emoji}</span></div>
+      <div class="card-body">
+        <div class="card-name">${item.name}</div>
+        <div class="card-price">₱${item.price}</div>
+        <div class="qty-row">
+          <button class="qty-btn minus" onclick="changeQty(${i}, -1)">−</button>
+          <div class="qty-val" id="qty-${i}">0</div>
+          <button class="qty-btn plus" onclick="changeQty(${i}, 1)">+</button>
+        </div>
+      </div>
+    </div>
+  `).join('');
+}
 
-    quantities.forEach(q=>{
-        const qty = parseInt(q.value);
-        const price = parseFloat(q.dataset.price);
-        const name = q.parentElement.querySelector('h3').innerText;
-        if(qty > 0){
-            const subtotal = qty*price;
-            total += subtotal;
-            receiptHTML += `<p>${name}<br>₱${price} x ${qty} = ₱${subtotal.toFixed(2)}</p><hr>`;
-            orderText += `${qty} x ${name}, `;
-        }
+function changeQty(i, delta) {
+  quantities[i] = Math.max(0, quantities[i] + delta);
+  document.getElementById('qty-' + i).textContent = quantities[i];
+  updateCartBtn();
+  updateReceipt();
+}
+
+function updateCartBtn() {
+  const total = quantities.reduce((a, b) => a + b, 0);
+  const btn = document.getElementById('cartBtn');
+  document.getElementById('cartBadge').textContent = total;
+  btn.style.display = total > 0 ? 'flex' : 'none';
+}
+
+function updateReceipt() {
+  const lines = [];
+  let total = 0;
+  quantities.forEach((qty, i) => {
+    if (qty > 0) {
+      const sub = qty * MENU[i].price;
+      total += sub;
+      lines.push({ name: MENU[i].name, price: MENU[i].price, qty, sub });
+    }
+  });
+
+  const empty = document.getElementById('emptyOrder');
+  const wrap = document.getElementById('receiptWrap');
+
+  if (lines.length === 0) {
+    empty.style.display = 'block';
+    wrap.style.display = 'none';
+    return;
+  }
+
+  empty.style.display = 'none';
+  wrap.style.display = 'block';
+
+  const now = new Date();
+  document.getElementById('receiptTime').textContent =
+    now.toLocaleDateString('en-PH', { month: 'short', day: 'numeric', year: 'numeric' }) + ' ' +
+    now.toLocaleTimeString('en-PH', { hour: '2-digit', minute: '2-digit' });
+
+  document.getElementById('receiptLines').innerHTML = lines.map(l => `
+    <div class="receipt-line">
+      <div>
+        <div class="receipt-item-name">${l.name}</div>
+        <div class="receipt-item-sub">₱${l.price} × ${l.qty}</div>
+      </div>
+      <div class="receipt-item-price">₱${l.sub.toFixed(2)}</div>
+    </div>
+  `).join('');
+
+  document.getElementById('receiptTotal').textContent = '₱' + total.toFixed(2);
+  document.getElementById('bayadInput').value = '';
+  document.getElementById('changeDisplay').className = 'change-display';
+}
+
+function computeChange() {
+  const totalText = document.getElementById('receiptTotal').textContent;
+  const total = parseFloat(totalText.replace('₱', ''));
+  const bayad = parseFloat(document.getElementById('bayadInput').value);
+  const disp = document.getElementById('changeDisplay');
+  const lbl = document.getElementById('changeLabel');
+  const amt = document.getElementById('changeAmount');
+
+  if (isNaN(bayad) || bayad <= 0) {
+    disp.className = 'change-display change-error show';
+    lbl.textContent = 'Error';
+    amt.textContent = 'Maglagay ng bayad';
+    return;
+  }
+  if (bayad < total) {
+    disp.className = 'change-display change-error show';
+    lbl.textContent = 'Kulang ng';
+    amt.textContent = '₱' + (total - bayad).toFixed(2);
+    return;
+  }
+  disp.className = 'change-display show';
+  lbl.textContent = 'Sukli';
+  amt.textContent = '₱' + (bayad - total).toFixed(2);
+}
+
+function resetOrder() {
+  quantities = new Array(MENU.length).fill(0);
+  MENU.forEach((_, i) => {
+    const el = document.getElementById('qty-' + i);
+    if (el) el.textContent = '0';
+  });
+  updateCartBtn();
+  updateReceipt();
+  switchTab('menu');
+}
+
+function switchTab(tab) {
+  ['menu', 'order', 'email'].forEach((t, idx) => {
+    document.getElementById('tab-' + t).classList.toggle('visible', t === tab);
+    document.querySelectorAll('.tab')[idx].classList.toggle('active', t === tab);
+  });
+}
+
+function showToast(msg, success = true) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.style.background = success ? '#27ae60' : '#c0392b';
+  t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 3000);
+}
+
+async function submitOrder() {
+  const name = document.getElementById('eName').value.trim();
+  const order = document.getElementById('eOrder').value.trim();
+  const address = document.getElementById('eAddress').value.trim();
+  if (!name || !order || !address) { showToast('Punan ang lahat ng fields!', false); return; }
+
+  try {
+    const res = await fetch('https://formspree.io/f/xdapjjlv', {
+      method: 'POST',
+      body: JSON.stringify({ name, order, address }),
+      headers: { 'Accept': 'application/json', 'Content-Type': 'application/json' }
     });
+    if (res.ok) {
+      showToast('Salamat! Natanggap na ang inyong order!');
+      document.getElementById('eName').value = '';
+      document.getElementById('eOrder').value = '';
+      document.getElementById('eAddress').value = '';
+    } else {
+      showToast('May error. Subukan ulit.', false);
+    }
+  } catch (e) {
+    showToast('May error. Subukan ulit.', false);
+  }
+}
 
-    if(total === 0) receiptHTML = "<p>Walang inorder.</p>";
-
-    document.getElementById('receiptContent').innerHTML = receiptHTML;
-    document.getElementById('totalAmount').innerHTML = `<strong>Total: ₱${total.toFixed(2)}</strong>`;
-
-    document.querySelector('.menu-grid').style.display = 'none';
-    orderBtn.style.display = 'none';
-
-    // Auto-fill email order
-    document.getElementById('order').value = orderText.slice(0,-2);
-});
-
-payBtn.addEventListener('click', function(){
-    const total = parseFloat(document.getElementById('totalAmount').innerText.replace('Total: ₱','')) || 0;
-    const bayad = parseFloat(document.getElementById('bayad').value);
-    if(isNaN(bayad) || bayad < total) document.getElementById('sukli').innerText = "Kulangan ang bayad!";
-    else document.getElementById('sukli').innerText = `Sukli: ₱${(bayad-total).toFixed(2)}`;
-});
-
-newOrderBtn.addEventListener('click', function(){
-    document.querySelectorAll('.quantity').forEach(q=>q.value=0);
-    document.getElementById('receiptContent').innerHTML = '';
-    document.getElementById('totalAmount').innerText = '';
-    document.getElementById('bayad').value = 0;
-    document.getElementById('sukli').innerText = '';
-    document.querySelector('.menu-grid').style.display = 'grid';
-    orderBtn.style.display = 'block';
-    document.getElementById('order').value = '';
-});
+buildMenu();
