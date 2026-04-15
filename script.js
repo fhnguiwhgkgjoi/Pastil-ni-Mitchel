@@ -1,14 +1,14 @@
 const MENU = [
-  { name: 'Pater', price: 25, emoji: '🍱' },
-  { name: 'Pater at 3 Siomai', price: 40, emoji: '🍱' },
-  { name: 'Pater at Hotdog', price: 40, emoji: '🌭' },
-  { name: 'Pater with Chicken Skin', price: 35, emoji: '🍗' },
-  { name: 'Chicken Skin with Rice', price: 30, emoji: '🍗' },
-  { name: 'Pater at Egg', price: 40, emoji: '🥚' },
-  { name: 'Siomai', price: 5, emoji: '🥟' },
-  { name: 'Lutong Hotdog', price: 15, emoji: '🌭' },
-  { name: 'Lutong Itlog', price: 15, emoji: '🥚' },
-  { name: 'Kanin', price: 10, emoji: '🍚' },
+  { name: 'Pater', price: 25},
+  { name: 'Pater at 3 Siomai', price: 40},
+  { name: 'Pater at Hotdog', price: 40,},
+  { name: 'Pater with Chicken Skin', price: 35},
+  { name: 'Chicken Skin with Rice', price: 30},
+  { name: 'Pater at Egg', price: 40},
+  { name: 'Siomai', price: 5},
+  { name: 'Lutong Hotdog', price: 15},
+  { name: 'Lutong Itlog', price: 15},
+  { name: 'Kanin', price: 10},
 ];
 
 let quantities = new Array(MENU.length).fill(0);
