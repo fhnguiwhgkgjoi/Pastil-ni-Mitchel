@@ -1,116 +1,97 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Pastil ni Mama</title>
-<link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pastil ni Mama</title>
+  <link rel="stylesheet" href="style.css">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
 </head>
 <body>
-<div class="container">
+<div class="app">
+  <div class="header">
+    <div class="header-label">Lutuin namin para sa inyo</div>
     <h1>Pastil ni Mama</h1>
+    <p>Masarap, mura, at puso sa bawat subo.</p>
+    <div class="header-divider"></div>
+  </div>
 
-    <!-- Menu Grid -->
-    <div class="menu-grid">
-        <!-- Row 1 -->
-        <div class="menu-card">
-            <img src="images/pater.jpg" alt="Pater">
-            <h3>Pater</h3>
-            <p>₱25</p>
-            <input type="number" min="0" value="0" class="quantity" data-price="25">
-        </div>
-        <div class="menu-card">
-            <img src="images/pater_3siomai.jpg" alt="Pater at 3 Siomai">
-            <h3>Pater at 3 Siomai</h3>
-            <p>₱40</p>
-            <input type="number" min="0" value="0" class="quantity" data-price="40">
-        </div>
-        <div class="menu-card">
-            <img src="images/pater_hotdog.jpg" alt="Pater at Hotdog">
-            <h3>Pater at Hotdog</h3>
-            <p>₱40</p>
-            <input type="number" min="0" value="0" class="quantity" data-price="40">
-        </div>
-        <div class="menu-card">
-            <img src="images/pater_chickenskin.jpg" alt="Pater with Chicken Skin">
-            <h3>Pater with Chicken Skin</h3>
-            <p>₱40</p>
-            <input type="number" min="0" value="0" class="quantity" data-price="35">
-        </div>
-        <div class="menu-card">
-            <img src="images/chickenskin_rice.jpg" alt="Chicken Skin with Rice">
-            <h3>Chicken Skin with Rice</h3>
-            <p>₱25</p>
-            <input type="number" min="0" value="0" class="quantity" data-price="30">
-        </div>
+  <div class="tab-bar">
+    <button class="tab active" onclick="switchTab('menu')">Menu</button>
+    <button class="tab" onclick="switchTab('order')">My Order</button>
+    <button class="tab" onclick="switchTab('email')">Send Order</button>
+  </div>
 
-        <!-- Row 2 -->
-        <div class="menu-card">
-            <img src="images/pater_egg.jpg" alt="Pater at Egg">
-            <h3>Pater at Egg</h3>
-            <p>₱40</p>
-            <input type="number" min="0" value="0" class="quantity" data-price="40">
-        </div>
-        <div class="menu-card">
-            <img src="images/siomai.jpg" alt="Siomai">
-            <h3>Siomai</h3>
-            <p>₱5</p>
-            <input type="number" min="0" value="0" class="quantity" data-price="5">
-        </div>
-        <div class="menu-card">
-            <img src="images/lutong_hotdog.jpg" alt="Lutong Hotdog">
-            <h3>Lutong Hotdog</h3>
-            <p>₱15</p>
-            <input type="number" min="0" value="0" class="quantity" data-price="15">
-        </div>
-        <div class="menu-card">
-            <img src="images/lutong_itlog.jpg" alt="Lutong Itlog">
-            <h3>Lutong Itlog</h3>
-            <p>₱15</p>
-            <input type="number" min="0" value="0" class="quantity" data-price="15">
-        </div>
-        <div class="menu-card">
-            <img src="images/kanin.jpg" alt="Kanin">
-            <h3>Kanin</h3>
-            <p>₱10</p>
-            <input type="number" min="0" value="0" class="quantity" data-price="10">
-        </div>
+  <!-- Menu Tab -->
+  <div id="tab-menu" class="section visible">
+    <div class="menu-grid" id="menuGrid"></div>
+    <div class="cart-bar" id="cartBar" style="margin-top:20px;">
+      <button class="cart-btn" id="cartBtn" onclick="switchTab('order')" style="display:none;">
+        <span>View Order</span>
+        <span class="cart-badge" id="cartBadge">0</span>
+      </button>
     </div>
+  </div>
 
-    <!-- Order Button -->
-    <button id="orderBtn">Order</button>
-
-    <!-- Receipt -->
-    <div class="receipt" id="receipt">
-        <h2>Resibo</h2>
-        <div id="receiptContent"></div>
-        <p id="totalAmount"></p>
-        <div class="payment">
-            <label>Bayad: ₱</label>
-            <input type="number" id="bayad" min="0" value="0">
-            <button id="payBtn">Change</button>
-            <p id="sukli"></p>
-        </div>
-        <button id="newOrderBtn">Make Another Order</button>
+  <!-- Order/Receipt Tab -->
+  <div id="tab-order" class="section">
+    <div id="emptyOrder" class="empty-state">
+      <div class="icon">🍱</div>
+      <p>Wala pang order. Pumili ka muna sa menu!</p>
     </div>
+    <div id="receiptWrap" style="display:none;">
+      <div class="receipt-card">
+        <div class="receipt-header">
+          <div class="receipt-title">Resibo</div>
+          <div class="receipt-stamp" id="receiptTime"></div>
+        </div>
+        <div id="receiptLines"></div>
+        <div class="receipt-total-row">
+          <div class="receipt-total-label">Total</div>
+          <div class="receipt-total-amount" id="receiptTotal">₱0</div>
+        </div>
+        <div class="payment-section">
+          <div class="payment-label">Bayad</div>
+          <div class="payment-input-row">
+            <div class="peso-input-wrap">
+              <span class="peso-symbol">₱</span>
+              <input type="number" class="peso-input" id="bayadInput" placeholder="0" min="0">
+            </div>
+            <button class="pay-btn" onclick="computeChange()">Sukli</button>
+          </div>
+          <div class="change-display" id="changeDisplay">
+            <div class="change-label" id="changeLabel">Sukli</div>
+            <div class="change-amount" id="changeAmount"></div>
+          </div>
+        </div>
+        <button class="new-order-btn" onclick="resetOrder()">Bagong Order</button>
+      </div>
+    </div>
+  </div>
 
-    <!-- Order Form for Email -->
-    <h2>Submit Your Order via Email</h2>
-    <form action="https://formspree.io/f/https://formspree.io/f/xdapjjlv" method="POST" id="orderFormEmail">
-        <label for="name">Pangalan:</label>
-        <input type="text" id="name" name="name" placeholder="Juan dela Cruz" required>
-
-        <label for="order">Order Details:</label>
-        <input type="text" id="order" name="order" placeholder="2 Pastil at 1 Pater" required>
-
-        <label for="address">Address:</label>
-        <input type="text" id="address" name="address" placeholder="Brgy. Example, QC" required>
-
-        <button type="submit">I-submit ang Order</button>
-    </form>
-
+  <!-- Email Tab -->
+  <div id="tab-email" class="section">
+    <div class="email-card">
+      <h2>I-submit ang Order</h2>
+      <p>Ipadala ang inyong order sa amin at makikipag-ugnayan kami sa inyo.</p>
+      <div class="form-group">
+        <label>Pangalan</label>
+        <input type="text" id="eName" placeholder="Juan dela Cruz">
+      </div>
+      <div class="form-group">
+        <label>Detalye ng Order</label>
+        <input type="text" id="eOrder" placeholder="2 Pater, 3 Siomai...">
+      </div>
+      <div class="form-group">
+        <label>Address</label>
+        <input type="text" id="eAddress" placeholder="Brgy. Example, QC">
+      </div>
+      <button class="submit-btn" onclick="submitOrder()">I-submit ang Order</button>
+    </div>
+  </div>
 </div>
 
+<div class="toast" id="toast"></div>
 <script src="script.js"></script>
 </body>
 </html>
